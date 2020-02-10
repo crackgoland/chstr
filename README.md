@@ -5,24 +5,26 @@ By nature, Go strings are immutable: a change causes copy. This package provides
 
 The core method is `Write(runeIndex int, value string) int`
 
-    package main
+```go
+package main
 
-    import "github.com/crackgoland/chstr"
+import "github.com/crackgoland/chstr"
 
-    func main() {
-      ms := chstr.New("Hello world", 100) // allocate 100 bytes for maximum string size and set initial content
-      
-      // Here is copy-less operations block. 
-      // NOTE: a string to be written is copied, but not the *ms string.
-      ms.Write(0, "Damn")
-      ms.Write(0, "Brave")
-      ms.Write(14, "小洞不补")
-      ms.Write(40, " --- --")
-      ms.Write(70, "Привет мир!")
-      
-      fmt.Println(ms.Get())
-    }
-    
+func main() {
+ms := chstr.New("Hello world", 100) // allocate 100 bytes for maximum string size and set initial content
+
+// Here is copy-less operations block. 
+// NOTE: a string to be written is copied, but not the *ms string.
+ms.Write(0, "Damn")
+ms.Write(0, "Brave")
+ms.Write(14, "小洞不补")
+ms.Write(40, " --- --")
+ms.Write(70, "Привет мир!")
+
+fmt.Println(ms.Get())
+}
+```
+
 Prints:
 
     Brave world小洞不补 --- --Привет мир!
@@ -32,15 +34,16 @@ NOTE: The output is 33 characters (33 runes). Offsets like 40 and 70 are to demo
 Writing more bytes than allocated (100) will panic
 
 ### Load
-`Load()` function takes string pointer and uses trick. Use it carefully as alternative to `Get()`, that copies resulting string in order to return it - Load will use your string (not tested for GC behaviour)
+`Load()` function takes string pointer and uses trick. Use carefully as alternative to `Get()` that copies resulting string in order to return it - Load will use your string (not tested for GC behaviour)
+```go
+// ..
 
-    // ..
+var s string
 
-	var s string
-    
-	ms.Load(&s)
-    
-	fmt.Println(s)
+ms.Load(&s)
+
+fmt.Println(s)
+```
     
 Prints:
 
