@@ -59,6 +59,20 @@ func (s MutableString) Get() string {
 	return string(s.buffer)
 }
 
+// Load Use trick to get current string without copying it (not tested well)
+func (s MutableString) Load(dst *string) (tmp string) {
+	hdst := (*reflect.StringHeader)(unsafe.Pointer(dst))
+
+	h := (*reflect.StringHeader)(unsafe.Pointer(&tmp))
+	h.Data = hdst.Data
+	h.Len = hdst.Len
+
+	hdst.Data = s.header.Data
+	hdst.Len = s.header.Len
+
+	return tmp
+}
+
 func runeToByteOffset(p []byte, np int, runeIndex int) (i int) {
 	// base code taken from utf8.RuneCount()
 	for n := 0; i < np && n < runeIndex; {
