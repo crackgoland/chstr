@@ -1,9 +1,9 @@
 # chstr
-By nature, Go strings are immutable: a change causes copy. This package provides a tiny type that allows to append and overwrite strings without copy operation.
+By nature, Go strings are immutable: a change causes copy. This package provides type that allows to append and overwrite strings without copy operation.
 
-#### Example
+## Example
 
-The core method is `Write(runeIndex int, value string) int` that
+The core method is `Write(runeIndex int, value string) int`
 
     package main
 
@@ -13,7 +13,7 @@ The core method is `Write(runeIndex int, value string) int` that
       ms := chstr.New("Hello world", 100)
       
       // Here is copy-less operations block. 
-      // NOTE: a string to be written is copied, but not the source string.
+      // NOTE: a string to be written is copied, but not the *ms string.
       ms.Write(0, "Damn")
       ms.Write(0, "Brave")
       ms.Write(14, "小洞不补")
