@@ -32,7 +32,7 @@ NOTE: The output is 33 characters (33 runes). Offsets like 40 and 70 are to demo
 Writing more bytes than allocated (100) will panic
 
 ### Load
-`Load()` function takes string pointer and uses trick. Use it carefuly as alternative to `Get()`, that copies resulting string in order to return it - Load will use your string.
+`Load()` function takes string pointer and uses trick. Use it carefully as alternative to `Get()`, that copies resulting string in order to return it - Load will use your string (not tested for GC behaviour)
 
     // ..
 
